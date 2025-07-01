@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profit Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            width: 150px;
+        }
+
+        input {
+            width: 90%;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3367d6;
+        }
+
+        #result {
+            /*font-weight: bold;*/
+            /*color: green;*/
+            /*border: 1px solid #ffffff;*/
+            /*padding: 6px;*/
+            /*margin-top: 10px;*/
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h3>Profit Calculator</h3>
+<label>Retail Price:</label>
+<br>
+<input id="retail" type="number"/>
+<br>
+
+<label>Price Position %</label>
+<br>
+<input id="position" type="number" value="100"/>
+<br>
+
+<label>Margin:</label>
+<br>
+<input id="margin" type="number" value="1500"/>
+<br>
+
+<label>Costs:</label>
+<br>
+<input id="costs" type="number" value="250"/>
+<br>
+
+<!--<button id="calc">Calculate</button>-->
+
+<!--<p id="result" style="font-weight: bolder"></p>-->
+<label>Max Purchase Price</label>
+<br>
+<input type="text" style="width: 90%;" id="result" readonly placeholder="Target Buy Price will appear here"/>
+<br>
+
+
+<script src="popup.js"></script>
+</body>
+</html>
