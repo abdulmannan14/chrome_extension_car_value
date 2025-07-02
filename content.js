@@ -22,5 +22,17 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             sendResponse({price: null});
         }
     }
+    else if (msg.type === "GET_NUMBER_PLATE") {
+        try {
+            const plateEl = document.querySelector("div.Vrm__VrmBox-sc-19tyda2-0");
+            const numberPlate = plateEl?.innerText?.trim() || "document";
+            sendResponse({numberPlate});
+        } catch (err) {
+            console.error("Number plate scraping error:", err);
+            sendResponse({numberPlate: "document"});
+        }
+        return true;
+    }
+
     return true; // Keep channel open for async
 });

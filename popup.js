@@ -1,9 +1,15 @@
+import {generatePDFFromPopup} from './generatePdf.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const retailInput = document.getElementById("retail");
     const positionInput = document.getElementById("position");
     const marginInput = document.getElementById("margin");
     const costsInput = document.getElementById("costs");
     const resultEl = document.getElementById("result");
+
+    const commissionRateInput = document.getElementById("commissionRate");
+    const commissionEl = document.getElementById("commission");
+    const totalMarginEl = document.getElementById("totalMargin");
 
     let baseRetailPrice = 0;
 
@@ -28,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Live update: input changes trigger recalculation
-    [retailInput, positionInput, marginInput, costsInput].forEach(input => {
+    [retailInput, positionInput, marginInput, costsInput, commissionRateInput].forEach(input => {
         input.addEventListener("input", () => {
             if (input === positionInput && baseRetailPrice) {
                 const position = parseFloat(positionInput.value || 0);
@@ -44,26 +50,38 @@ document.addEventListener("DOMContentLoaded", () => {
         const pricePosition = parseFloat(positionInput.value || 0);
         const margin = parseFloat(marginInput.value || 0);
         const costs = parseFloat(costsInput.value || 0);
+        const commissionRate = parseFloat(commissionRateInput.value || 0);
 
         if (
             isNaN(retailPrice) ||
             isNaN(pricePosition) ||
             isNaN(margin) ||
-            isNaN(costs)
+            isNaN(costs) ||
+            isNaN(commissionRate)
         ) {
             resultEl.value = "Invalid input";
             return;
         }
 
-        const result = calculateTargetBuyPrice({
+        const targetBuyPrice = calculateTargetBuyPrice({
             retailPrice,
             pricePosition,
             margin,
             costs
         });
 
-        resultEl.value = `${result}`;
+        const commission = Math.round(retailPrice * (commissionRate / 100));
+        const totalPotentialMargin = margin + commission;
+
+        resultEl.value = `${targetBuyPrice}`;
+        commissionEl.value = `${commission}`;
+        totalMarginEl.value = `${totalPotentialMargin}`;
     }
+
+    document.getElementById("saveBtn").addEventListener("click", async () => {
+        generatePDFFromPopup();
+    });
+
 
     function calculateTargetBuyPrice({retailPrice, pricePosition, margin, costs}) {
         const target = (retailPrice * (pricePosition / 100)) - margin - costs;
