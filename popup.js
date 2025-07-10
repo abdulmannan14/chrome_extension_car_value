@@ -87,4 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const target = (retailPrice * (pricePosition / 100)) - margin - costs;
         return Math.round(target);
     }
+
+
+
+
 });
